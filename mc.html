@@ -254,6 +254,16 @@
             entry.style.display = 'flex';
             document.documentElement.webkitCancelFullScreen();
         });
+        document.getElementById('cache-name').addEventListener('click', (e) => {
+            if (e.target.tagName == 'SPAN') {
+                _iname.value = e.target.textContent;
+            }
+        });
+        document.getElementById('cache-loc').addEventListener('click', (e) => {
+            if (e.target.tagName == 'SPAN') {
+                _iloc.value = e.target.textContent;
+            }
+        });
         function getFormatDate(date) {
             return date.getFullYear() + "-"
                 + ((date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + ":"
