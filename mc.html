@@ -6,15 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
-    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script> -->
     <style>
         body {
-            background: #4692f2;
+            background: #3a8afd;
             margin: 0;
         }
 
         #main {
-            margin: 0.5rem 0.5rem;
+            margin: 0.5rem 0;
             margin-top: 2rem;
         }
 
@@ -54,6 +53,7 @@
         }
 
         #code-box {
+            margin: 0 0.5rem;
             justify-content: space-between;
         }
 
@@ -80,8 +80,8 @@
         }
 
         #main-img {
-            width: 95%;
-            margin: 2rem auto;
+            width: 100%;
+            margin-top: 1rem ;
             position: relative;
         }
 
@@ -94,30 +94,47 @@
             font-size: 0.85rem;
         }
 
+        #name-time {
+            width: 100%;
+            color: #9b9a98;
+            top: 21.5%;
+            left: 0%;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
         #name {
-            top: 4%;
-            right: 5%;
-            font-size: 0.9rem;
+            color: #9b9a98;
         }
 
         #time1 {
-            top: 8%;
-            right: 5%;
+            color: #9b9a98;
+            margin-left: 0.5rem;
+        }
+
+        #loc-id {
+            width: 100%;
+            top: 13.9%;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #616161;
         }
 
         #loc {
             width: 100%;
-            top: 20.8%;
+            top: 17.5%;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
+            color: #000201;
+            text-shadow: 1px 0px black;
         }
 
         #time2 {
-            top: 91%;
-            left: 11.5%;
+            top: 63.7%;
+            left: 17%;
             color: white;
             letter-spacing: 0.02rem;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
 
         #desc {
@@ -186,18 +203,18 @@
         </div>
         <div id="main-img">
             <img src="main.png" />
-            <div class="abs" id="name">嘶嘶斯</div>
-            <div class="abs" id="time1"></div>
+            <div class="abs flex" id="name-time">
+                <div id="name">嘶嘶斯</div>
+                <div id="time1"></div>
+            </div>
+            <div class="abs" id="loc-id">场所ID：11**415</div>
             <div class="abs" id="loc">是大家安静</div>
             <div class="abs" id="time2"></div>
-        </div>
-        <div id="desc">
-            依托全国一体化政务服务平台<br>
-            实现跨省（市、区）数据共享和共通互认
         </div>
     </div>
     <script>
         let now = new Date();
+        console.log(getFormatDate(now))
         document.getElementById('time1').textContent = getFormatDate(now);
         document.getElementById('time2').textContent = getFormatDate(new Date(
             now.getFullYear(), now.getMonth(), now.getDate(), 3, 12
@@ -212,7 +229,7 @@
         let locs = localStorage.getItem('iloc') ? localStorage.getItem('iloc').split(',') : [];
         let names = localStorage.getItem('iname') ? localStorage.getItem('iname').split(',') : [];
         if (locs.length) {
-            let cn = document.getElementById('cache-name');
+            let cn = document.getElementById('cache-loc');
             for (const l of locs) {
                 let e = document.createElement('span');
                 e.textContent = l;
@@ -220,7 +237,7 @@
             }
         }
         if (names.length) {
-            let cn = document.getElementById('cache-loc');
+            let cn = document.getElementById('cache-name');
             for (const l of names) {
                 let e = document.createElement('span');
                 e.textContent = l;
@@ -230,6 +247,11 @@
         gen.addEventListener('click', () => {
             let iloc = _iloc.value;
             let iname = _iname.value;
+            if (iname.length == 2) {
+                iname = iname[0] + '*';
+            } else if (iname.length >= 3) {
+                iname = iname[0] + '*' + iname[iname.length - 1];
+            }
             if (iloc && iname) {
                 if (locs.indexOf(iloc) < 0) {
                     locs.push(iloc);
@@ -266,8 +288,8 @@
         });
         function getFormatDate(date) {
             return date.getFullYear() + "-"
-                + ((date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + ":"
-                + (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ":"
+                + ((date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-"
+                + (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + " "
                 + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":"
                 + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes())
         }
